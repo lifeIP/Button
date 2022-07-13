@@ -1,0 +1,10 @@
+#pragma once
+#include <fstream>
+#include <thread>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <math.h>
+#include <filesystem>
+#include <iostream>
+#include <SFML/Graphics.hpp>
