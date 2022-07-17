@@ -11,7 +11,12 @@ int main() {
 	Button::set_window_ptr(&window);
 	Button::set_f_lag(button_push, 8);
 	Button button_0(0);
+	std::vector<unsigned int> rgba = { 255, 255, 255, 255 };
+	button_0.set_color(rgba, rgba, rgba, rgba);
 	button_0.set_color_highlighting(&sf::Color::Blue, &sf::Color::Blue, &sf::Color::Blue, &sf::Color::Blue);
+	sf::Texture texture;
+	texture.loadFromFile("btexture.jpg");
+	button_0.set_texture(&texture);
 	Button button_1(1);
 	button_1.set_button_pos(&sf::Vector2f(0, 70));
 	button_1.set_color_highlighting(&sf::Color::Red, &sf::Color::Blue, &sf::Color::Red, &sf::Color::Blue);
@@ -89,7 +94,7 @@ int main() {
 				}
 			}
 		}
-		window.clear(sf::Color::Black);
+		window.clear(sf::Color::White);
 		//Place for the rendering function+
 		window.draw(button_0);
 		window.draw(button_1);

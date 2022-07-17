@@ -22,8 +22,10 @@ public:
 	static int which_button_pressed();
 	void set_color_highlighting(const sf::Color* color_highlight_0, const sf::Color* color_highlight_1, const sf::Color* color_highlight_2, const sf::Color* color_highlight_3);
 	void button_monitoring();
-	
+	void set_texture(sf::Texture* texture);
+	void set_texture_coord(const sf::Vector2f* tex_coord_0, const sf::Vector2f* tex_coord_1, const sf::Vector2f* tex_coord_2, const sf::Vector2f* tex_coord_3);
 private:
+	sf::Texture *texture;
 	sf::Color color_highlight_0; 
 	sf::Color color_highlight_1;
 	sf::Color color_highlight_2;
@@ -32,6 +34,11 @@ private:
 	sf::Vector2u offset;
 	sf::Vector2f button_pos;
 	sf::Vector2u button_size;
+	bool texture_b;
+	sf::Vector2f tex_coord_0;
+	sf::Vector2f tex_coord_1;
+	sf::Vector2f tex_coord_2;
+	sf::Vector2f tex_coord_3;
 	std::vector<unsigned int>rgba_0;
 	std::vector<unsigned int>rgba_1;
 	std::vector<unsigned int>rgba_2;

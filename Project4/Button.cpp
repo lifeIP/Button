@@ -111,6 +111,7 @@ sf::Vector2u Button::get_button_size() const
 
 Button::Button(int button_number)
 {
+	texture_b = false;
 	button_pos = sf::Vector2f(0, 0);
 	button_size = sf::Vector2u(400, 65);
 	this->button_number = button_number;
@@ -153,10 +154,18 @@ void Button::set_color_highlighting(const sf::Color* color_highlight_0, const sf
 
 void Button::highlighting()
 {
-	obj[0] = sf::Vertex(sf::Vector2f(button_pos.x, button_pos.y), color_highlight_0);
-	obj[1] = sf::Vertex(sf::Vector2f(button_pos.x + button_size.x, button_pos.y), color_highlight_1);
-	obj[2] = sf::Vertex(sf::Vector2f(button_pos.x + button_size.x, button_pos.y + button_size.y), color_highlight_2);
-	obj[3] = sf::Vertex(sf::Vector2f(button_pos.x, button_pos.y + button_size.y), color_highlight_3);
+	if (texture_b) {
+		obj[0] = sf::Vertex(sf::Vector2f(button_pos.x, button_pos.y), color_highlight_0, tex_coord_0);
+		obj[1] = sf::Vertex(sf::Vector2f(button_pos.x + button_size.x, button_pos.y), color_highlight_1, tex_coord_1);
+		obj[2] = sf::Vertex(sf::Vector2f(button_pos.x + button_size.x, button_pos.y + button_size.y), color_highlight_2, tex_coord_2);
+		obj[3] = sf::Vertex(sf::Vector2f(button_pos.x, button_pos.y + button_size.y), color_highlight_3, tex_coord_3);
+	}
+	else {
+		obj[0] = sf::Vertex(sf::Vector2f(button_pos.x, button_pos.y), color_highlight_0);
+		obj[1] = sf::Vertex(sf::Vector2f(button_pos.x + button_size.x, button_pos.y), color_highlight_1);
+		obj[2] = sf::Vertex(sf::Vector2f(button_pos.x + button_size.x, button_pos.y + button_size.y), color_highlight_2);
+		obj[3] = sf::Vertex(sf::Vector2f(button_pos.x, button_pos.y + button_size.y), color_highlight_3);
+	}
 }
 
 void Button::button_monitoring()
@@ -174,14 +183,45 @@ void Button::button_monitoring()
 	}
 }
 
+void Button::set_texture(sf::Texture* texture)
+{
+	this->texture = texture;
+	texture_b = true;
+	sf::Vector2u tex_size = texture->getSize();
+	tex_coord_0 = button_pos;
+	tex_coord_1 = sf::Vector2f(button_pos.x + tex_size.x, button_pos.y);
+	tex_coord_2 = sf::Vector2f(button_pos.x + tex_size.x, button_pos.y + tex_size.y);
+	tex_coord_3 = sf::Vector2f(button_pos.x, tex_size.y + button_pos.y);
+	config_button_pos_size_texture_config();
+}
+
+void Button::set_texture_coord(const sf::Vector2f* tex_coord_0, const sf::Vector2f* tex_coord_1, const sf::Vector2f* tex_coord_2, const sf::Vector2f* tex_coord_3)
+{
+	this->tex_coord_0 = *tex_coord_0;
+	this->tex_coord_1 = *tex_coord_1;
+	this->tex_coord_2 = *tex_coord_2;
+	this->tex_coord_3 = *tex_coord_3;
+	texture_b = true;
+	config_button_pos_size_texture_config();
+}
+
 void Button::config_button_pos_size_texture_config()
 {
 	obj.resize(4);
 	obj.setPrimitiveType(sf::Quads);
-	obj[0] = sf::Vertex(sf::Vector2f(button_pos.x, button_pos.y), sf::Color::Color(rgba_0[0], rgba_0[1], rgba_0[2], rgba_0[3]));
-	obj[1] = sf::Vertex(sf::Vector2f(button_pos.x + button_size.x, button_pos.y), sf::Color::Color(rgba_1[0], rgba_1[1], rgba_1[2], rgba_1[3]));
-	obj[2] = sf::Vertex(sf::Vector2f(button_pos.x + button_size.x, button_pos.y + button_size.y), sf::Color::Color(rgba_2[0], rgba_2[1], rgba_2[2], rgba_2[3]));
-	obj[3] = sf::Vertex(sf::Vector2f(button_pos.x, button_pos.y + button_size.y), sf::Color::Color(rgba_3[0], rgba_3[1], rgba_3[2], rgba_3[3]));
+	if (texture_b) {
+		obj[0] = sf::Vertex(sf::Vector2f(button_pos.x, button_pos.y), sf::Color::Color(rgba_0[0], rgba_0[1], rgba_0[2], rgba_0[3]),tex_coord_0);
+		obj[1] = sf::Vertex(sf::Vector2f(button_pos.x + button_size.x, button_pos.y), sf::Color::Color(rgba_1[0], rgba_1[1], rgba_1[2], rgba_1[3]), tex_coord_1);
+		obj[2] = sf::Vertex(sf::Vector2f(button_pos.x + button_size.x, button_pos.y + button_size.y), sf::Color::Color(rgba_2[0], rgba_2[1], rgba_2[2], rgba_2[3]), tex_coord_2);
+		obj[3] = sf::Vertex(sf::Vector2f(button_pos.x, button_pos.y + button_size.y), sf::Color::Color(rgba_3[0], rgba_3[1], rgba_3[2], rgba_3[3]), tex_coord_3);
+	}
+	else {
+		obj[0] = sf::Vertex(sf::Vector2f(button_pos.x, button_pos.y), sf::Color::Color(rgba_0[0], rgba_0[1], rgba_0[2], rgba_0[3]));
+		obj[1] = sf::Vertex(sf::Vector2f(button_pos.x + button_size.x, button_pos.y), sf::Color::Color(rgba_1[0], rgba_1[1], rgba_1[2], rgba_1[3]));
+		obj[2] = sf::Vertex(sf::Vector2f(button_pos.x + button_size.x, button_pos.y + button_size.y), sf::Color::Color(rgba_2[0], rgba_2[1], rgba_2[2], rgba_2[3]));
+		obj[3] = sf::Vertex(sf::Vector2f(button_pos.x, button_pos.y + button_size.y), sf::Color::Color(rgba_3[0], rgba_3[1], rgba_3[2], rgba_3[3]));
+
+	}
 }
 
 void Button::config_button_text()
@@ -194,7 +234,7 @@ void Button::config_button_text()
 
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	
+	states.texture = texture;
 	target.draw(obj, states);
 	target.draw(text);
 }

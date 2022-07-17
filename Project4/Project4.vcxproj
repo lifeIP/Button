@@ -150,6 +150,9 @@
     <ClInclude Include="lib.h" />
     <ClInclude Include="obj.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="btexture.jpg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
