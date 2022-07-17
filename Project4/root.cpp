@@ -12,9 +12,15 @@ int main() {
 	Button::set_f_lag(button_push, 8);
 	Button button_0(0);
 	button_0.set_color_highlighting(&sf::Color::Blue, &sf::Color::Blue, &sf::Color::Blue, &sf::Color::Blue);
-	//Button button_1(1);
-	//Button button_2(2);
-	//Button button_3(3);
+	Button button_1(1);
+	button_1.set_button_pos(&sf::Vector2f(0, 70));
+	button_1.set_color_highlighting(&sf::Color::Red, &sf::Color::Blue, &sf::Color::Red, &sf::Color::Blue);
+	Button button_2(2);
+	button_2.set_button_pos(&sf::Vector2f(0, 140));
+	button_2.set_color_highlighting(&sf::Color::Green, &sf::Color::Blue, &sf::Color::Yellow, &sf::Color::Blue);
+	Button button_3(3);
+	button_3.set_button_pos(&sf::Vector2f(0, 210));
+	button_3.set_color_highlighting(&sf::Color::Magenta, &sf::Color::Blue, &sf::Color::Blue, &sf::Color::White);
 	//Button button_4(4);
 	//Button button_5(5);
 	//Button button_6(6);
@@ -38,7 +44,6 @@ int main() {
 				switch (some_event.mouseButton.button)
 				{
 				case sf::Mouse::Left:
-					button_0.button_monitoring();
 					//button_1.button_monitoring();
 					//button_2.button_monitoring();
 					//button_3.button_monitoring();
@@ -87,6 +92,13 @@ int main() {
 		window.clear(sf::Color::Black);
 		//Place for the rendering function+
 		window.draw(button_0);
+		window.draw(button_1);
+		window.draw(button_2);
+		window.draw(button_3);
+		button_0.button_monitoring();
+		button_1.button_monitoring();
+		button_2.button_monitoring();
+		button_3.button_monitoring();
 		//Place for the rendering function-
 		window.display();
 	}
